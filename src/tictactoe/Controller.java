@@ -1,5 +1,7 @@
 package tictactoe;
 
+import javafx.scene.input.MouseButton;
+
 public class Controller {
 	
 	ServiceLocator serviceLocator;
@@ -10,20 +12,20 @@ public class Controller {
 		this.client = client;
 		this.view = view;
 		
-	//register ourselves to listen for mouse clicks
+		//register ourselves to listen for mouse clicks
 		view.tile.setOnMouseClicked(event ->{
 			if(event.getButton() == MouseButton.PRIMARY){
-				client.drawX();
+				view.tile.drawX();
 			}
 			else if (event.getButton()== MouseButton.SECONDARY){
-				client.drawO();
+				view.tile.drawO();
 			}	
 		});
 			
 	
 		
-		serviceLocator = ServiceLocator.getServiceLocator();
-		serviceLocator = getLogger().info("Application controller initialized");	
+	//  serviceLocator = ServiceLocator.getServiceLocator();
+	//	serviceLocator = getLogger().info("Application controller initialized");	
 		
 	}
 	

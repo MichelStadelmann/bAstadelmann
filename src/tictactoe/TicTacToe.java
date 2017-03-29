@@ -1,5 +1,7 @@
 package tictactoe;
 
+import java.util.logging.Logger;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -29,6 +31,13 @@ public class TicTacToe extends Application {
 	public void init(){
 		if(mainProgram == null){
 			mainProgram = this;
+			
+			//Resource are now intialized
+			serviceLocator = ServiceLocator.getServiceLocator();
+			Logger l = Logger.getLogger("");
+			serviceLocator.setLogger(l);
+			
+			
 		}else{
 			Platform.exit();
 		}
@@ -42,9 +51,6 @@ public class TicTacToe extends Application {
 		client = new Client();
 		view = new View(primaryStage, client);
 		controller = new Controller(client, view);
-		
-		//Resource are now intialized
-		serviceLocator = ServiceLocator.getServiceLocator();
 		
 		
 		//Display the GUI after all initialization is complete

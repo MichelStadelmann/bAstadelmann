@@ -18,6 +18,7 @@ public class View {
 	private Client client;
 	private Scene scene;
 	private ServiceLocator serviceLocator;
+	public Tile tile;
 
 	
 	public View(Stage stage, Client client) {
@@ -30,8 +31,8 @@ public class View {
 		
 		
 		serviceLocator = ServiceLocator.getServiceLocator();
-	//	System.out.println(serviceLocator);
-	//	serviceLocator.getLogger().info("Application view initialized");
+		System.out.println(serviceLocator);
+		serviceLocator.getLogger().info("Application view initialized");
 		
 	}
 
@@ -63,7 +64,8 @@ public class View {
 	public class Tile extends StackPane {
 		private Text text = new Text();
 		private Tile tile;
-		
+	
+
 		
 		public Tile(){
 			Rectangle border = new Rectangle(200,200);
@@ -74,11 +76,11 @@ public class View {
 			getChildren().addAll(border);
 		}
 		
-		private void drawX(){
+		protected void drawX(){
 			text.setText("X");
 		}
 		
-		private void drawO(){
+		protected void drawO(){
 			text.setText("O");
 		}
 		
