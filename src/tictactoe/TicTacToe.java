@@ -38,6 +38,8 @@ public class TicTacToe extends Application {
 			serviceLocator.setLogger(l);
 			
 			
+			
+			
 		}else{
 			Platform.exit();
 		}
@@ -55,6 +57,8 @@ public class TicTacToe extends Application {
 		
 		//Display the GUI after all initialization is complete
 		view.start();
+		
+	//	if (!Client.)
 		
 		
 	}
