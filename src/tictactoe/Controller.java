@@ -21,18 +21,20 @@ public class Controller {
 		//the logger checks if there is an object
 		
 		serviceLocator = ServiceLocator.getServiceLocator();
-		serviceLocator.getLogger().info("tile ist:" +view.getTile());		
+		Tile tilo = view.getTile();
+		serviceLocator.getLogger().info("tile ist:" +tilo);
+//		serviceLocator.getLogger().info("tile ist:" +view.getTile());		
 //		
 //		
 //		//register ourselves to listen for mouse clicks
-		view.tile.setOnMouseClicked(event ->{
-			if(event.getButton() == MouseButton.PRIMARY){
-				view.tile.drawX();
-			}
-			else if (event.getButton()== MouseButton.SECONDARY){
-				view.tile.drawO();
-			}	
-		});
+//		view.tile.setOnMouseClicked(event ->{
+//			if(event.getButton() == MouseButton.PRIMARY){
+//				view.tile.drawX();
+//			}
+//			else if (event.getButton()== MouseButton.SECONDARY){
+//				view.tile.drawO();
+//			}	
+//		});
 			
 	
 		

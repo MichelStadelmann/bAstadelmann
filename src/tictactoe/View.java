@@ -53,9 +53,10 @@ public class View {
 			for (int j = 0; j <3; j++){
 				Tile tile = new Tile();
 				tile.setTranslateX(j*200);
-				tile.setTranslateY(i *200);
+				tile.setTranslateY(i*200);
 				
 				root.getChildren().add(tile);
+				
 				
 			}
 		}
