@@ -6,22 +6,37 @@ import javafx.event.EventHandler;
 public class Controller {
 
 	ServiceLocator serviceLocator;
-	private Client client;
+	private Model model;
 	private View view;
 
-	public Controller(Client client, View view) {
-		this.client = client;
+	protected Controller(Model model, View view) {
+		this.model = model;
 		this.view = view;
 
-		view.button.setOnAction(new EventHandler<ActionEvent>() {
+		// register ourselves to listen for button clicks
+		for (int i = 0; i < 9; i++) {
+			view.btn[i].setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					System.out.println("Hello World");
 
-			@Override
-			public void handle(ActionEvent event) {
-				client.addSymbol();
-				String newText = Integer.toString(client.getValue());
+				}
+			});
+		}
 
-			}
-		});
+		// String test = view.getButtonId();
+		// serviceLocator = ServiceLocator.getServiceLocator();
+		// serviceLocator.getLogger().info("test");
+
+		// view.button.setOnAction(new EventHandler<ActionEvent>() {
+		//
+		// @Override
+		// public void handle(ActionEvent event) {
+		// client.addSymbol();
+		// String newText = Integer.toString(client.getValue());
+		//
+		// }
+		// });
 
 	}
 

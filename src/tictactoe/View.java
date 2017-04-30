@@ -11,16 +11,25 @@ public class View {
 
 	private static final double HEIGHT = 600;
 	private static final double WIDTH = 600;
+	private static final int numButtons = 9;
 
 	private Stage stage;
-	private Client client;
-	private Scene scene1;
+	private Model model;
 	private ServiceLocator serviceLocator;
 	protected Button button;
+	protected Button btn[] = new Button[9];
 
-	public View(Stage stage, Client client) {
+	/**
+	 * The tic tac toe playground is created. 9 Buttons which are filled in an
+	 * array and added to a GridPane Layout
+	 * 
+	 * @param stage
+	 * @param model
+	 */
+
+	protected View(Stage stage, Model model) {
 		this.stage = stage;
-		this.client = client;
+		this.model = model;
 
 		stage.setTitle("Tic Tac Toe");
 
@@ -30,33 +39,35 @@ public class View {
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
 
-				Button button = new Button();
-				button.setMaxWidth(Double.MAX_VALUE);
-				button.setMaxHeight(Double.MAX_VALUE);
-
-				// button id's are set
+				// create buttons and add them to layout
 				if (i == 0) {
-					button.setId(String.valueOf(j + 1));
-				}
-
-				if (i == 1) {
-					button.setId(String.valueOf(j + 1 + 3));
-				}
-
-				if (i == 2) {
-					button.setId(String.valueOf(j + 1 + 6));
-				}
-
-				root.add(button, i, j);
-				serviceLocator = ServiceLocator.getServiceLocator();
-				serviceLocator.getLogger().info(button.getId());
-
-				// buttons fill max width of GridPane
-				if (i == 0) {
+					btn[j] = new Button();
+					btn[j].setMaxWidth(Double.MAX_VALUE);
+					btn[j].setMaxHeight(Double.MAX_VALUE);
+					root.add(btn[j], i, j);
+					// buttons fill max width of GridPane
 					ColumnConstraints column = new ColumnConstraints();
 					column.setPercentWidth(33);
 					root.getColumnConstraints().add(column);
+
 				}
+
+				if (i == 1) {
+					btn[j + 3] = new Button();
+					btn[j + 3].setMaxWidth(Double.MAX_VALUE);
+					btn[j + 3].setMaxHeight(Double.MAX_VALUE);
+					root.add(btn[j + 3], i, j);
+
+				}
+
+				if (i == 2) {
+					btn[j + 6] = new Button();
+					btn[j + 6].setMaxWidth(Double.MAX_VALUE);
+					btn[j + 6].setMaxHeight(Double.MAX_VALUE);
+					root.add(btn[j + 6], i, j);
+
+				}
+
 			}
 
 			// buttons fill max height of GridPane
@@ -74,13 +85,21 @@ public class View {
 
 	}
 
+	public Button getButton() {
+		return button;
+	}
+
+	public void setButton(Button button) {
+		this.button = button;
+	}
+
 	public void start() {
 		stage.show();
 
 	}
 
 	public void stop() {
-		// TODO Auto-generated method stub
+		stage.hide();
 
 	}
 
