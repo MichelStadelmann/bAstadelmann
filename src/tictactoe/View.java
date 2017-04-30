@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class View {
@@ -18,6 +19,7 @@ public class View {
 	private ServiceLocator serviceLocator;
 	protected Button button;
 	protected Button btn[] = new Button[9];
+	protected Text text = new Text();
 
 	/**
 	 * The tic tac toe playground is created. 9 Buttons which are filled in an
@@ -100,6 +102,27 @@ public class View {
 
 	public void stop() {
 		stage.hide();
+
+	}
+
+	public void drawSymbol(int index) {
+
+		if (model.getTurnX() == true) {
+
+			btn[index].setText("X");
+			btn[index].setDisable(true);
+			model.setTurnX(false);
+			model.setTurnY(true);
+
+		}
+
+		else {
+
+			btn[index].setText("O");
+			model.setTurnX(true);
+			model.setTurnY(false);
+
+		}
 
 	}
 
