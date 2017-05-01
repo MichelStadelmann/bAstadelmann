@@ -23,7 +23,7 @@ public class LoginView {
 
 	protected Button btnConnect = new Button("Login");
 
-	protected LoginView(Stage stage, LoginModel loginModel) {
+	public LoginView(Stage stage, LoginModel loginModel) {
 		this.stage = stage;
 		this.loginModel = loginModel;
 

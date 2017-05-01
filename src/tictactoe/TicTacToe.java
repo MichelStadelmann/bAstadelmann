@@ -5,8 +5,15 @@ import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import login.LoginController;
+import login.LoginModel;
+import login.LoginView;
 
 public class TicTacToe extends Application {
+
+	private LoginView loginView;
+	private LoginController loginController;
+	private LoginModel loginModel;
 
 	private Model model;
 	private View view;
@@ -40,29 +47,56 @@ public class TicTacToe extends Application {
 		}
 	}
 
+	/**
+	 * After starting the java fx framework the login gui is first initialized.
+	 * It's classes are in the package login. Then the Class Login Controller
+	 * gives the order to build up the Tic Tac Toe Board, when the player logged
+	 * in. The login Gui will be closed at that moment.
+	 */
+
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		// Initialize the GUI
-		// Fat client architecture: The client contains the whole model and is
-		// so equal to model
-		model = new Model();
-		view = new View(primaryStage, model);
-		controller = new Controller(model, view);
+		loginModel = new LoginModel();
+		loginView = new LoginView(primaryStage, loginModel);
+		loginController = new LoginController(loginModel, loginView);
 
-		// Display the GUI after all initialization is complete
-		view.start();
-
-		// if (!Client.)
+		loginView.start();
 
 	}
+
+	public static void startBoard() {
+		Stage boardStage = new Stage();
+		Model model = new Model();
+		View view = new View(boardStage, model);
+		Controller controller = new Controller(model, view);
+		view.start();
+
+		// loginView.stop();
+		// loginView = null;
+
+	}
+
+	// public void start(Stage primaryStage) throws Exception {
+	// // Initialize the GUI
+
+	// model = new Model();
+	// view = new View(primaryStage, model);
+	// controller = new Controller(model, view);
+	//
+	// // Display the GUI after all initialization is complete
+	// view.start();
+	//
+	// // if (!Client.)
+
+	// }
 
 	/**
 	 * Optional: to clean house, disconnect from network server
 	 */
 
-	public void stop() {
-		if (view != null)
-			view.stop();
-	}
+	// public void stop() {
+	// if (view != null)
+	// view.stop();
+	// }
 
 }

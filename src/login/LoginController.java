@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.WindowEvent;
+import tictactoe.TicTacToe;
 
 public class LoginController {
 
@@ -82,7 +83,8 @@ public class LoginController {
 		int port = Integer.parseInt(LoginView.tfPort.getText());
 		String player = LoginView.tfPlayer.getText();
 		LoginModel.setUpUser(player, ip, port);
-		// main.startSplash();
+		TicTacToe.startBoard();
+		LoginView.getStage().close();
 
 	}
 
