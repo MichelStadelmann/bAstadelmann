@@ -2,7 +2,7 @@ package tictactoe;
 
 public class Model {
 
-	private String[] board = new String[8];
+	private String[] board = new String[9];
 
 	// Player X begins the game
 	private Boolean turnX = true;
@@ -32,6 +32,8 @@ public class Model {
 	 * it compares the values in the array with the win combinations if there is
 	 * already a winning combination.
 	 * 
+	 * Note: the tiles are counted from top down
+	 * 
 	 * @param index
 	 * @param state
 	 */
@@ -42,16 +44,64 @@ public class Model {
 			System.out.println(s);
 		counter++;
 
+		// toDo: examine switch statement for less code
+
+		// vertical win condition
+
+		checkVictory(state);
+
+		// if (board[0] == "X" && board[1] == "X" && board[2] == "X") {
+		// System.out.println("Player 1 has won");
+		// }
+		//
+		// if (board[4] == "X" && board[5] == "X" && board[6] == "X") {
+		// System.out.println("Player 1 has won");
+		// }
+		//
+		// if (board[7] == "X" && board[8] == "X" && board[9] == "X") {
+		// System.out.println("Player 1 has won");
+		// }
+		//
+		// // horizontal win condition
+		//
+		// if (board[0] == "X" && board[4] == "X" && board[7] == "X") {
+		// System.out.println("Player 1 has won");
+		// }
+		//
+		// if (board[1] == "X" && board[5] == "X" && board[8] == "X") {
+		// System.out.println("Player 1 has won");
+		// }
+		//
+		// if (board[2] == "X" && board[6] == "X" && board[9] == "X") {
+		// System.out.println("Player 1 has won");
+		// }
+		//
+		// // diagonal win condition
+		//
+		// if (board[0] == "X" && board[5] == "X" && board[9] == "X") {
+		// System.out.println("Player 1 has won");
+		// }
+		//
+		// if (board[2] == "X" && board[5] == "X" && board[7] == "X") {
+		// System.out.println("Player 1 has won");
+		// }
+		//
+		// //
+		//
+		// if (board[0] == "Y" && board[1] == "Y" && board[2] == "Y") {
+		// System.out.println("Player 2 has won");
+		// }
+
+		// else if (counter == 9) {
+		// System.out.println("Tie Game!");
+		// }
+
+	}
+
+	private void checkVictory(String state) {
+
 		if (board[0] == "X" && board[1] == "X" && board[2] == "X") {
 			System.out.println("Player 1 has won");
-		}
-
-		if (board[0] == "Y" && board[1] == "Y" && board[2] == "Y") {
-			System.out.println("Player 2 has won");
-		}
-
-		else if (counter == 9) {
-			System.out.println("Tie Game!");
 		}
 
 	}
