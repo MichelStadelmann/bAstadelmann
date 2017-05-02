@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import login.LoginController;
 import login.LoginModel;
 import login.LoginView;
+import network.Server;
 
 public class TicTacToe extends Application {
 
@@ -20,6 +21,7 @@ public class TicTacToe extends Application {
 	private Controller controller;
 	private ServiceLocator serviceLocator;
 	private static TicTacToe mainProgram;
+	private Server server;
 
 	public static void main(String[] args) {
 		launch(args);
@@ -65,14 +67,12 @@ public class TicTacToe extends Application {
 	}
 
 	public static void startBoard() {
+
 		Stage boardStage = new Stage();
 		Model model = new Model();
 		View view = new View(boardStage, model);
 		Controller controller = new Controller(model, view);
 		view.start();
-
-		// loginView.stop();
-		// loginView = null;
 
 	}
 

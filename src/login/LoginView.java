@@ -58,4 +58,28 @@ public class LoginView {
 		return stage;
 	}
 
+	public TextField getTfIP() {
+		return tfIP;
+	}
+
+	public void setTfIP(TextField tfIP) {
+		this.tfIP = tfIP;
+	}
+
+	public TextField getTfPort() {
+		return tfPort;
+	}
+
+	public void setTfPort(TextField tfPort) {
+		this.tfPort = tfPort;
+	}
+
+	public TextField getTfPlayer() {
+		return tfPlayer;
+	}
+
+	public void setTfPlayer(TextField tfPlayer) {
+		this.tfPlayer = tfPlayer;
+	}
+
 }

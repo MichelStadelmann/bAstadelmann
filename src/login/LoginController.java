@@ -78,6 +78,7 @@ public class LoginController {
 	}
 
 	// saves IP, Port and Playername in the mainClass
+	// closes Login and open Board
 	protected void btnConnect() {
 		String ip = LoginView.tfIP.getText();
 		int port = Integer.parseInt(LoginView.tfPort.getText());

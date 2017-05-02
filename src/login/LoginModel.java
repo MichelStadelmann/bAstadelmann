@@ -12,7 +12,6 @@ package login;
 public class LoginModel {
 
 	public static void setUpUser(String player, String ip, int port) {
-		// TODO Auto-generated method stub
 
 	}
 
