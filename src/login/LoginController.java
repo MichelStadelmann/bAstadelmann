@@ -9,22 +9,28 @@ import tictactoe.TicTacToe;
 public class LoginController {
 
 	private LoginModel loginModel;
-	private LoginView LoginView;
+	private LoginView loginView;
 
 	public LoginController(LoginModel loginModel, LoginView loginView) {
 		this.loginModel = loginModel;
-		this.LoginView = loginView;
+		this.loginView = loginView;
 
 		// Connect with the server.
-		LoginView.btnConnect.setOnAction(new EventHandler<ActionEvent>() {
+		loginView.btnConnect.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				btnConnect();
+				String ip = loginView.tfIP.getText();
+				int port = Integer.parseInt(loginView.tfPort.getText());
+				String player = loginView.tfPlayer.getText();
+				loginModel.connect(player, ip, port);
+				TicTacToe.startBoard();
+				loginView.getStage().close();
+
 			}
 		});
 
 		// Close window.
-		LoginView.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
+		loginView.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
 			public void handle(WindowEvent event) {
 				Platform.exit();
@@ -32,28 +38,28 @@ public class LoginController {
 		});
 
 		// ChangeListener for the text-property of the Username
-		LoginView.tfPlayer.textProperty().addListener(
+		loginView.tfPlayer.textProperty().addListener(
 				// Parameters of any PropertyChangeListener
 				(observable, oldValue, newValue) -> {
 					validateUsername(newValue);
 				});
 
 		// ChangeListener for the text-property of the IP
-		LoginView.tfIP.textProperty().addListener(
+		loginView.tfIP.textProperty().addListener(
 				// Parameters of any PropertyChangeListener
 				(observable, oldValue, newValue) -> {
 					validateIP(newValue);
 				});
 
 		// ChangeListener for the text-property of the port number
-		LoginView.tfPort.textProperty().addListener(
+		loginView.tfPort.textProperty().addListener(
 				// Parameters of any PropertyChangeListener
 				(observable, oldValue, newValue) -> {
 					validatePortNumber(newValue);
 				});
 
 		// register ourselves to handle window-closing event
-		LoginView.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
+		loginView.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
 			public void handle(WindowEvent event) {
 				Platform.exit();
@@ -79,14 +85,5 @@ public class LoginController {
 
 	// saves IP, Port and Playername in the mainClass
 	// closes Login and open Board
-	protected void btnConnect() {
-		String ip = LoginView.tfIP.getText();
-		int port = Integer.parseInt(LoginView.tfPort.getText());
-		String player = LoginView.tfPlayer.getText();
-		LoginModel.setUpUser(player, ip, port);
-		TicTacToe.startBoard();
-		LoginView.getStage().close();
-
-	}
 
 }

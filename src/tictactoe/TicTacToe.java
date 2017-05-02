@@ -8,7 +8,6 @@ import javafx.stage.Stage;
 import login.LoginController;
 import login.LoginModel;
 import login.LoginView;
-import network.Server;
 
 public class TicTacToe extends Application {
 
@@ -21,7 +20,6 @@ public class TicTacToe extends Application {
 	private Controller controller;
 	private ServiceLocator serviceLocator;
 	private static TicTacToe mainProgram;
-	private Server server;
 
 	public static void main(String[] args) {
 		launch(args);
