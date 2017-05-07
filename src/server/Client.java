@@ -3,6 +3,8 @@ package server;
 import java.io.IOException;
 import java.net.Socket;
 
+import messages.GameMsg;
+
 public class Client {
 
 	private Socket socket;
@@ -25,6 +27,11 @@ public class Client {
 
 	public String toString() {
 		return name + ": " + socket.toString();
+	}
+
+	public void send(GameMsg msg) {
+		msg.send(socket);
+
 	}
 
 }

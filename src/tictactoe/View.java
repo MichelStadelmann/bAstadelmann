@@ -18,7 +18,7 @@ public class View {
 	private Model model;
 	private ServiceLocator serviceLocator;
 	protected Button button;
-	protected Button btn[] = new Button[9];
+	public Button btn[] = new Button[9];
 	protected Text text = new Text();
 
 	/**
@@ -110,7 +110,7 @@ public class View {
 		if (model.getTurnX() == true) {
 
 			btn[index].setText("X");
-			btn[index].setDisable(true);
+			// btn[index].setDisable(true);
 			model.setTurnX(false);
 			model.setTurnY(true);
 
@@ -124,6 +124,14 @@ public class View {
 
 		}
 
+	}
+
+	public Button[] getBtn() {
+		return btn;
+	}
+
+	public void setBtn(Button[] btn) {
+		this.btn = btn;
 	}
 
 }

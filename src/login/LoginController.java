@@ -4,12 +4,14 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.WindowEvent;
+import tictactoe.Model;
 import tictactoe.TicTacToe;
 
 public class LoginController {
 
 	private LoginModel loginModel;
 	private LoginView loginView;
+	private Model model;
 
 	public LoginController(LoginModel loginModel, LoginView loginView) {
 		this.loginModel = loginModel;
@@ -17,12 +19,13 @@ public class LoginController {
 
 		// Connect with the server.
 		loginView.btnConnect.setOnAction(new EventHandler<ActionEvent>() {
+
 			@Override
 			public void handle(ActionEvent event) {
 				String ip = loginView.tfIP.getText();
 				int port = Integer.parseInt(loginView.tfPort.getText());
-				String player = loginView.tfPlayer.getText();
-				loginModel.connect(player, ip, port);
+				String name = loginView.tfPlayer.getText();
+				// loginModel.connect(name, ip, port, model);
 				TicTacToe.startBoard();
 				loginView.getStage().close();
 

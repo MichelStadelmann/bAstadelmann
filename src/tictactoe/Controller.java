@@ -1,13 +1,17 @@
 package tictactoe;
 
+import java.io.IOException;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import server.ServerModel;
 
 public class Controller {
 
 	ServiceLocator serviceLocator;
 	private Model model;
 	private View view;
+	private int index;
 
 	protected Controller(Model model, View view) {
 		this.model = model;
@@ -32,14 +36,22 @@ public class Controller {
 
 		// register ourselves to listen for button clicks
 
-		int index = 0;
+		index = 0;
 		view.btn[0].setOnAction(new EventHandler<ActionEvent>() {
+
+			private ServerModel serverModel = new ServerModel();
 
 			@Override
 			public void handle(ActionEvent event) {
 				System.out.println("Hello World");
-				view.drawSymbol(index);
-				model.update(index, view.btn[0].getText());
+				// view.drawSymbol(index);
+				// model.update(index, view.btn[0].getText());
+				try {
+					model.sendMessage(index);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 			}
 		});
@@ -141,6 +153,8 @@ public class Controller {
 
 	}
 
+	// view.stage.setOnCloseRequest( event -> model.disconnect() );
+
 	// String test = view.getButtonId();
 	// serviceLocator = ServiceLocator.getServiceLocator();
 	// serviceLocator.getLogger().info("test");
@@ -154,5 +168,13 @@ public class Controller {
 	//
 	// }
 	// });
+
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
 
 }

@@ -1,5 +1,11 @@
 package tictactoe;
 
+import java.io.IOException;
+import java.net.Socket;
+
+import messages.ChangeMsg;
+import messages.Message;
+
 public class Model {
 
 	private String[] board = new String[9];
@@ -9,6 +15,20 @@ public class Model {
 	private Boolean turnY = false;
 
 	private int counter = 0;
+
+	private GameStat gamy;
+
+	private ServiceLocator serviceLocator;
+
+	private Socket socket;
+
+	public GameStat getGamy() {
+		return gamy;
+	}
+
+	public void setGamy(GameStat gamy) {
+		this.gamy = gamy;
+	}
 
 	public Boolean getTurnY() {
 		return turnY;
@@ -39,6 +59,7 @@ public class Model {
 	 */
 
 	public void update(int index, String state) {
+		gamy = new GameStat(index, state);
 		board[index] = state;
 		for (String s : board)
 			System.out.println(s);
@@ -104,6 +125,67 @@ public class Model {
 			System.out.println("Player 1 has won");
 		}
 
+	}
+
+	/**
+	 * Methods for Networking games
+	 * 
+	 * @param name
+	 * @param ip
+	 * @param port
+	 */
+
+	// public void connect(String name, String ip, int port) {
+	// logger.info("Connect");
+	// this.name = name;
+	// try {
+	// socket = new Socket(ip, port);
+	//
+	// // Create thread to read incoming messages
+	// Runnable r = new Runnable() {
+	//
+	// @Override
+	// public void run() {
+	// while (true) {
+	//
+	// GameMsg gMsg = (GameMsg) Message.receive(socket);
+	// newestState.set(gMsg.getState());
+	// }
+	//
+	// }
+	//
+	// };
+	// Thread t = new Thread(r);
+	// t.start();
+	//
+	// // Send game state update message to the server
+	// Message msg = new GameMsg(controller.getIndex(),
+	// view.getBtn()[1].getText());
+	// msg.send(socket);
+	//
+	// } catch (Exception e) {
+	// logger.warning(e.toString());
+	// }
+	//
+	// }
+	//
+	// public void disconnect() {
+	// logger.info("Disconnect");
+	// if (socket != null)
+	// try {
+	// socket.close();
+	// } catch (IOException e) {
+	//
+	// }
+	//
+	// }
+
+	public void sendMessage(int index) throws IOException {
+		serviceLocator = ServiceLocator.getServiceLocator();
+		serviceLocator.getLogger().info("send Boardchange");
+		Message change = new ChangeMsg(index);
+		Socket socket = new Socket("localhost", 22222);
+		change.send(socket);
 	}
 
 }
