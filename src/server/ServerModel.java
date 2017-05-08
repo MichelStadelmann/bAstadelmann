@@ -6,7 +6,7 @@ import java.net.Socket;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import messages.GameMsg;
+import messages.ChangeMsg;
 import tictactoe.ServiceLocator;
 
 /**
@@ -28,25 +28,21 @@ public class ServerModel {
 	// List for the current clients
 	protected final ObservableList<Client> clients = FXCollections.observableArrayList();
 
-	public static void setUpUser(String player, String ip, int port) {
-
-	}
-
 	public void startServer(int port) throws IOException {
 		try {
 			listener = new ServerSocket(port, 2, null);
 			serviceLocator = ServiceLocator.getServiceLocator();
 			serviceLocator.getLogger().info("Server started - waiting for Player");
 			Runnable r = new Runnable() {
+
 				@Override
 				public void run() {
-					while (!stop && client_id < 2) {
+					while (!stop) {
 						try {
 							Socket socket = listener.accept();
 							// Client vs Clientcommunication
-							Client client = new Client(client_id, socket);
+							Client client = new Client(ServerModel.this, socket);
 							clients.add(client);
-							client_id++;
 						} catch (Exception e) {
 							serviceLocator = ServiceLocator.getServiceLocator();
 							serviceLocator.getLogger().info(e.toString());
@@ -96,11 +92,11 @@ public class ServerModel {
 
 	}
 
-	public void broadcast(GameMsg outMsg) {
+	public void broadcast(ChangeMsg msg) {
 		serviceLocator = ServiceLocator.getServiceLocator();
 		serviceLocator.getLogger().info("Broadcasting message to clients");
 		for (Client c : clients) {
-			c.send(outMsg);
+			c.send(msg);
 		}
 
 	}

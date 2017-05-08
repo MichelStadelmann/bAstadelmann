@@ -151,9 +151,9 @@ public class Controller {
 			}
 		});
 
-	}
+		view.getStage().setOnCloseRequest(event -> model.disconnect());
 
-	// view.stage.setOnCloseRequest( event -> model.disconnect() );
+	}
 
 	// String test = view.getButtonId();
 	// serviceLocator = ServiceLocator.getServiceLocator();

@@ -15,6 +15,7 @@ public class View {
 	private static final int numButtons = 9;
 
 	private Stage stage;
+
 	private Model model;
 	private ServiceLocator serviceLocator;
 	protected Button button;
@@ -132,6 +133,14 @@ public class View {
 
 	public void setBtn(Button[] btn) {
 		this.btn = btn;
+	}
+
+	public Stage getStage() {
+		return stage;
+	}
+
+	public void setStage(Stage stage) {
+		this.stage = stage;
 	}
 
 }

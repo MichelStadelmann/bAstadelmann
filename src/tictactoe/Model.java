@@ -2,7 +2,9 @@ package tictactoe;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.logging.Logger;
 
+import javafx.beans.property.SimpleStringProperty;
 import messages.ChangeMsg;
 import messages.Message;
 
@@ -21,6 +23,13 @@ public class Model {
 	private ServiceLocator serviceLocator;
 
 	private Socket socket;
+
+	private String name;
+	private Logger logger = Logger.getLogger("");
+
+	protected SimpleStringProperty newestMessage = new SimpleStringProperty();
+
+	private View view;
 
 	public GameStat getGamy() {
 		return gamy;
@@ -134,6 +143,59 @@ public class Model {
 	 * @param ip
 	 * @param port
 	 */
+
+	public void connect(String name, String ip, int port, View view) {
+		logger.info("Connect");
+		this.name = name;
+		this.view = view;
+		try {
+			socket = new Socket("localhost", 22222);
+
+			// Create thread to read incoming messages
+			Runnable r = new Runnable() {
+
+				@Override
+				public void run() {
+					while (true) {
+
+						try {
+							// GameMsg msg = (GameMsg) Message.receive(socket);
+							ChangeMsg change = (ChangeMsg) Message.receive(socket);
+							// newestMessage.set(change.getIndex());
+							// view.getBtn()board[0].se
+
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+
+				}
+
+			};
+			Thread t = new Thread(r);
+			t.start();
+
+			// Send join message to the server
+			Message msg = new messages.JoinMsg(name);
+			msg.send(socket);
+
+		} catch (Exception e) {
+			logger.warning(e.toString());
+		}
+
+	}
+
+	public void disconnect() {
+		logger.info("Disconnect");
+		if (socket != null)
+			try {
+				socket.close();
+			} catch (IOException e) {
+
+			}
+
+	}
 
 	// public void connect(String name, String ip, int port) {
 	// logger.info("Connect");
