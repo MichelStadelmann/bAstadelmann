@@ -2,6 +2,7 @@ package tictactoe;
 
 import java.io.IOException;
 
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import server.ServerModel;
@@ -44,8 +45,8 @@ public class Controller {
 			@Override
 			public void handle(ActionEvent event) {
 				System.out.println("Hello World");
-				// view.drawSymbol(index);
-				// model.update(index, view.btn[0].getText());
+				view.drawSymbol(index);
+				model.update(index, view.btn[0].getText());
 				try {
 					model.sendMessage(index);
 				} catch (IOException e) {
@@ -152,6 +153,9 @@ public class Controller {
 		});
 
 		view.getStage().setOnCloseRequest(event -> model.disconnect());
+		
+		model.newestMessage.addListener( (o, oldValue, newValue) -> view.btn[0].setText("M"));
+		
 
 	}
 

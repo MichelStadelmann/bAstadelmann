@@ -4,9 +4,13 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.logging.Logger;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import messages.ChangeMsg;
+import messages.GameMsg;
+import messages.JoinMsg;
 import messages.Message;
+import server.Client;
 
 public class Model {
 
@@ -27,7 +31,7 @@ public class Model {
 	private String name;
 	private Logger logger = Logger.getLogger("");
 
-	protected SimpleStringProperty newestMessage = new SimpleStringProperty();
+	protected SimpleIntegerProperty newestMessage = new SimpleIntegerProperty();
 
 	private View view;
 
@@ -159,10 +163,15 @@ public class Model {
 					while (true) {
 
 						try {
-							// GameMsg msg = (GameMsg) Message.receive(socket);
-							ChangeMsg change = (ChangeMsg) Message.receive(socket);
-							// newestMessage.set(change.getIndex());
-							// view.getBtn()board[0].se
+							Message msg = Message.receive(socket);
+							if (msg instanceof ChangeMsg) {
+								System.out.println("Test");
+								newestMessage.set(((ChangeMsg) msg).getIndex());
+							} else if (msg instanceof GameMsg) {
+								//under Construction
+
+							}
+							
 
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
@@ -246,7 +255,6 @@ public class Model {
 		serviceLocator = ServiceLocator.getServiceLocator();
 		serviceLocator.getLogger().info("send Boardchange");
 		Message change = new ChangeMsg(index);
-		Socket socket = new Socket("localhost", 22222);
 		change.send(socket);
 	}
 

@@ -1,5 +1,6 @@
 package server;
 
+
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -70,5 +71,7 @@ public class ServerView {
 	public void setTfPort(TextField tfPort) {
 		this.tfPort = tfPort;
 	}
+	
+
 
 }

@@ -3,6 +3,7 @@ package server;
 import java.io.IOException;
 
 import javafx.application.Platform;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.WindowEvent;
@@ -70,6 +71,8 @@ public class ServerController {
 				Platform.exit();
 			}
 		});
+		
+		
 
 	}
 

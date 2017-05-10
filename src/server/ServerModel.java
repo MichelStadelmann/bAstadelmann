@@ -7,6 +7,7 @@ import java.net.Socket;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import messages.ChangeMsg;
+import messages.Message;
 import tictactoe.ServiceLocator;
 
 /**
@@ -20,8 +21,6 @@ import tictactoe.ServiceLocator;
 public class ServerModel {
 
 	private ServerSocket listener;
-	private Socket socket;
-	private static int client_id = 0;
 	ServiceLocator serviceLocator;
 	public volatile boolean stop = false;
 
@@ -43,6 +42,12 @@ public class ServerModel {
 							// Client vs Clientcommunication
 							Client client = new Client(ServerModel.this, socket);
 							clients.add(client);
+							for (Client i : clients) {
+								  System.out.println((i));
+							}
+							serviceLocator = ServiceLocator.getServiceLocator();
+							serviceLocator.getLogger().info(clients.toString());
+							
 						} catch (Exception e) {
 							serviceLocator = ServiceLocator.getServiceLocator();
 							serviceLocator.getLogger().info(e.toString());
@@ -92,7 +97,7 @@ public class ServerModel {
 
 	}
 
-	public void broadcast(ChangeMsg msg) {
+	public void broadcast(Message msg) {
 		serviceLocator = ServiceLocator.getServiceLocator();
 		serviceLocator.getLogger().info("Broadcasting message to clients");
 		for (Client c : clients) {

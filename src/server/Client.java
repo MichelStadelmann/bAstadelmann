@@ -22,13 +22,19 @@ public class Client {
 			@Override
 			public void run() {
 				while (true) {
-					Message msg = Message.receive(socket);
-					if (msg instanceof ChangeMsg) {
-						serverModel.broadcast((ChangeMsg) msg);
-					} else if (msg instanceof JoinMsg) {
-						Client.this.name = ((JoinMsg) msg).getName();
+					try {
+						Message msg = Message.receive(socket);
+						System.out.println("TestServer");
+						if (msg instanceof ChangeMsg) {
+							serverModel.broadcast((ChangeMsg) msg);
+						} else if (msg instanceof JoinMsg) {
+							Client.this.name = ((JoinMsg) msg).getName();
+
+						}
+					} catch (Exception e) {
 					}
 				}
+
 			}
 		};
 		Thread t = new Thread(r);
@@ -48,7 +54,7 @@ public class Client {
 		return name + ": " + socket.toString();
 	}
 
-	public void send(ChangeMsg msg) {
+	public void send(Message msg) {
 		msg.send(socket);
 
 	}

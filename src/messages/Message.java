@@ -42,7 +42,7 @@ public abstract class Message implements Serializable {
 	 *            The socket to use when sending the message
 	 */
 
-	public void send(Socket socket) {
+	public void send(Socket s) {
 		// Set the message id before sending (if not already done)
 		if (this.id == -1)
 			this.id = nextMessageID();
@@ -52,7 +52,7 @@ public abstract class Message implements Serializable {
 
 		ObjectOutputStream out;
 		try {
-			out = new ObjectOutputStream(socket.getOutputStream());
+			out = new ObjectOutputStream(s.getOutputStream());
 			out.writeObject(this);
 			out.flush();
 		} catch (IOException e) {
