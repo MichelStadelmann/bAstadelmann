@@ -20,6 +20,9 @@ public class TicTacToe extends Application {
 	private Controller controller;
 	private ServiceLocator serviceLocator;
 	private static TicTacToe mainProgram;
+	private static String iP;
+	private static int port;
+	private static String name;
 
 	public static void main(String[] args) {
 		launch(args);
@@ -58,7 +61,7 @@ public class TicTacToe extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		loginModel = new LoginModel();
 		loginView = new LoginView(primaryStage, loginModel);
-		loginController = new LoginController(loginModel, loginView);
+		loginController = new LoginController(mainProgram, loginModel, loginView);
 
 		loginView.start();
 
@@ -71,6 +74,40 @@ public class TicTacToe extends Application {
 		View view = new View(boardStage, model);
 		Controller controller = new Controller(model, view);
 		view.start();
+		model.connect(iP, port, name);
+
+	}
+
+	/**
+	 * The following parameters are sent by the loginModel. They are used to
+	 * transfer the login data from the login-process to the game.
+	 * 
+	 * @param ip
+	 */
+
+	// ip
+	public static void setIP(String s) {
+		iP = s;
+
+	}
+
+	public static String getIP() {
+		return iP;
+	}
+
+	// port
+	public static void setPort(int p) {
+		port = p;
+
+	}
+
+	public static int getPort() {
+		return port;
+	}
+
+	// name
+	public static void SetName(String n) {
+		name = n;
 
 	}
 

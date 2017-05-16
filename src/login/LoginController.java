@@ -4,16 +4,15 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.WindowEvent;
-import tictactoe.Model;
 import tictactoe.TicTacToe;
 
 public class LoginController {
 
 	private LoginModel loginModel;
 	private LoginView loginView;
-	private Model model;
+	TicTacToe mainProgram;
 
-	public LoginController(LoginModel loginModel, LoginView loginView) {
+	public LoginController(TicTacToe mainProgram, LoginModel loginModel, LoginView loginView) {
 		this.loginModel = loginModel;
 		this.loginView = loginView;
 
@@ -25,8 +24,10 @@ public class LoginController {
 				String ip = loginView.tfIP.getText();
 				int port = Integer.parseInt(loginView.tfPort.getText());
 				String name = loginView.tfPlayer.getText();
-				// loginModel.connect(name, ip, port, model);
+				loginModel.setUpUser(ip, port, name);
 				TicTacToe.startBoard();
+
+				// model.connect(ip, port, name);
 				loginView.getStage().close();
 
 			}

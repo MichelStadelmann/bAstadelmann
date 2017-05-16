@@ -2,7 +2,6 @@ package tictactoe;
 
 import java.io.IOException;
 
-import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import server.ServerModel;
@@ -153,9 +152,8 @@ public class Controller {
 		});
 
 		view.getStage().setOnCloseRequest(event -> model.disconnect());
-		
-		model.newestMessage.addListener( (o, oldValue, newValue) -> view.btn[0].setText("M"));
-		
+
+		model.newestMessage.addListener((o, oldValue, newValue) -> view.btn[0].setText("M"));
 
 	}
 

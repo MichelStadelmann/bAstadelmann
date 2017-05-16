@@ -5,12 +5,9 @@ import java.net.Socket;
 import java.util.logging.Logger;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import messages.ChangeMsg;
 import messages.GameMsg;
-import messages.JoinMsg;
 import messages.Message;
-import server.Client;
 
 public class Model {
 
@@ -148,12 +145,12 @@ public class Model {
 	 * @param port
 	 */
 
-	public void connect(String name, String ip, int port, View view) {
+	public void connect(String ip, int port, String name) {
 		logger.info("Connect");
 		this.name = name;
-		this.view = view;
+
 		try {
-			socket = new Socket("localhost", 22222);
+			socket = new Socket(ip, port);
 
 			// Create thread to read incoming messages
 			Runnable r = new Runnable() {
@@ -168,10 +165,9 @@ public class Model {
 								System.out.println("Test");
 								newestMessage.set(((ChangeMsg) msg).getIndex());
 							} else if (msg instanceof GameMsg) {
-								//under Construction
+								// under Construction
 
 							}
-							
 
 						} catch (Exception e) {
 							// TODO Auto-generated catch block

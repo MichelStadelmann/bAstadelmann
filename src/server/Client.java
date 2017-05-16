@@ -27,6 +27,7 @@ public class Client {
 						System.out.println("TestServer");
 						if (msg instanceof ChangeMsg) {
 							serverModel.broadcast((ChangeMsg) msg);
+							System.out.println("broadcast to all clients");
 						} else if (msg instanceof JoinMsg) {
 							Client.this.name = ((JoinMsg) msg).getName();
 

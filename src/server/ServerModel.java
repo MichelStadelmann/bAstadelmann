@@ -6,7 +6,6 @@ import java.net.Socket;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import messages.ChangeMsg;
 import messages.Message;
 import tictactoe.ServiceLocator;
 
@@ -43,11 +42,11 @@ public class ServerModel {
 							Client client = new Client(ServerModel.this, socket);
 							clients.add(client);
 							for (Client i : clients) {
-								  System.out.println((i));
+								System.out.println((i));
 							}
 							serviceLocator = ServiceLocator.getServiceLocator();
 							serviceLocator.getLogger().info(clients.toString());
-							
+
 						} catch (Exception e) {
 							serviceLocator = ServiceLocator.getServiceLocator();
 							serviceLocator.getLogger().info(e.toString());
@@ -102,6 +101,7 @@ public class ServerModel {
 		serviceLocator.getLogger().info("Broadcasting message to clients");
 		for (Client c : clients) {
 			c.send(msg);
+			System.out.println("allen Spielern");
 		}
 
 	}
