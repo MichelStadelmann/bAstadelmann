@@ -154,13 +154,15 @@ public class Controller {
 		// model.newestMessage.addListener((o, oldValue, newValue) ->
 		// view.btn[0].setText(newValue));
 		// });
+		// model.newestMessage.addListener((o, oldValue, newValue)
+		// ->view.btn[0].setText(newValue));
 
-		Platform.runLater(new Runnable() {
+		model.newestMessage.addListener((o, oldValue, newValue) -> Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				model.newestMessage.addListener((o, oldValue, newValue) -> view.btn[0].setText(newValue));
+				view.btn[0].setText(newValue);
 			}
-		});
+		}));
 
 		// model.newestMessage.addListener((o, oldValue, newValue)
 		// ->view.btn[0].setText(newValue));
