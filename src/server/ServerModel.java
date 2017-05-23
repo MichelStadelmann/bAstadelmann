@@ -26,6 +26,8 @@ public class ServerModel {
 	// List for the current clients
 	protected final ObservableList<Client> clients = FXCollections.observableArrayList();
 
+	
+
 	public void startServer(int port) throws IOException {
 		try {
 			listener = new ServerSocket(port, 2, null);
@@ -104,6 +106,10 @@ public class ServerModel {
 			System.out.println("allen Spielern");
 		}
 
+	}
+	
+	public ObservableList<Client> getClients() {
+		return clients;
 	}
 
 }

@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
 import messages.BoardMsg;
 import messages.Message;
+import server.Client;
 
 public class Model {
 
@@ -15,6 +16,8 @@ public class Model {
 	// Player X begins the game
 	private Boolean turnX = true;
 	private Boolean turnY = false;
+	
+	private volatile boolean stop = false;
 
 	private int counter = 0;
 
@@ -152,11 +155,14 @@ public class Model {
 			socket = new Socket(ip, port);
 
 			// Create thread to read incoming messages
+			// Runnable r = new Runnable as an inner class
 			Runnable r = new Runnable() {
+
+				
 
 				@Override
 				public void run() {
-					while (true) {
+					while (!stop) {
 						BoardMsg bMsg;
 						try {
 							bMsg = (BoardMsg) Message.receive(socket);
@@ -194,6 +200,7 @@ public class Model {
 
 	public void disconnect() {
 		logger.info("Disconnect");
+		stop = true;
 		if (socket != null)
 			try {
 				socket.close();
@@ -216,5 +223,11 @@ public class Model {
 		serviceLocator.getLogger().info(name);
 		Message boardMsg = new BoardMsg(name, message);
 		boardMsg.send(socket);
+	}
+
+	public void definePlayer() {
+		Client client;
+		
+		
 	}
 }

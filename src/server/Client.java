@@ -12,6 +12,7 @@ public class Client {
 	private Socket socket;
 	private String name;
 	private ServerModel serverModel;
+	private volatile boolean stop = false;
 
 	protected Client(ServerModel serverModel, Socket socket) {
 		this.serverModel = serverModel;
@@ -21,8 +22,8 @@ public class Client {
 		Runnable r = new Runnable() {
 			@Override
 			public void run() {
-				while (true) {
-					try {
+				try {
+					while (!stop) {
 						Message msg = Message.receive(socket);
 						System.out.println("bereit für einkommende Nachrichten");
 						if (msg instanceof BoardMsg) {
@@ -32,8 +33,8 @@ public class Client {
 							Client.this.name = ((JoinMsg) msg).getName();
 
 						}
-					} catch (Exception e) {
 					}
+				} catch (Exception e) {
 				}
 
 			}
@@ -44,6 +45,7 @@ public class Client {
 
 	public void stop() {
 		try {
+			stop = true;
 			socket.close();
 		} catch (IOException e) {
 

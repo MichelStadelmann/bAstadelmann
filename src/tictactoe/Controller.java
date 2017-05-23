@@ -46,6 +46,7 @@ public class Controller {
 				view.drawSymbol(index);
 				model.update(index, view.btn[0].getText());
 				model.sendMessage(view.btn[0].getText());
+				
 
 			}
 		});
@@ -150,22 +151,12 @@ public class Controller {
 		// Avoid throwing IllegalStateException by running from a non-JavaFX
 		// thread
 		// https://stackoverflow.com/questions/17850191/why-am-i-getting-java-lang-illegalstateexception-not-on-fx-application-thread
-		// Platform.runLater(() -> {
-		// model.newestMessage.addListener((o, oldValue, newValue) ->
-		// view.btn[0].setText(newValue));
-		// });
-		// model.newestMessage.addListener((o, oldValue, newValue)
-		// ->view.btn[0].setText(newValue));
-
 		model.newestMessage.addListener((o, oldValue, newValue) -> Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
 				view.btn[0].setText(newValue);
 			}
 		}));
-
-		// model.newestMessage.addListener((o, oldValue, newValue)
-		// ->view.btn[0].setText(newValue));
 
 	}
 
