@@ -1,7 +1,6 @@
 package tictactoe;
 
-import java.io.IOException;
-
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import server.ServerModel;
@@ -46,12 +45,7 @@ public class Controller {
 				System.out.println("Hello World");
 				view.drawSymbol(index);
 				model.update(index, view.btn[0].getText());
-				try {
-					model.sendMessage(index);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				model.sendMessage(view.btn[0].getText());
 
 			}
 		});
@@ -153,7 +147,23 @@ public class Controller {
 
 		view.getStage().setOnCloseRequest(event -> model.disconnect());
 
-		model.newestMessage.addListener((o, oldValue, newValue) -> view.btn[0].setText("M"));
+		// Avoid throwing IllegalStateException by running from a non-JavaFX
+		// thread
+		// https://stackoverflow.com/questions/17850191/why-am-i-getting-java-lang-illegalstateexception-not-on-fx-application-thread
+		// Platform.runLater(() -> {
+		// model.newestMessage.addListener((o, oldValue, newValue) ->
+		// view.btn[0].setText(newValue));
+		// });
+
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				model.newestMessage.addListener((o, oldValue, newValue) -> view.btn[0].setText(newValue));
+			}
+		});
+
+		// model.newestMessage.addListener((o, oldValue, newValue)
+		// ->view.btn[0].setText(newValue));
 
 	}
 

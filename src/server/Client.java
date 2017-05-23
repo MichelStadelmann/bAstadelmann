@@ -3,7 +3,7 @@ package server;
 import java.io.IOException;
 import java.net.Socket;
 
-import messages.ChangeMsg;
+import messages.BoardMsg;
 import messages.JoinMsg;
 import messages.Message;
 
@@ -24,9 +24,9 @@ public class Client {
 				while (true) {
 					try {
 						Message msg = Message.receive(socket);
-						System.out.println("TestServer");
-						if (msg instanceof ChangeMsg) {
-							serverModel.broadcast((ChangeMsg) msg);
+						System.out.println("bereit für einkommende Nachrichten");
+						if (msg instanceof BoardMsg) {
+							serverModel.broadcast((BoardMsg) msg);
 							System.out.println("broadcast to all clients");
 						} else if (msg instanceof JoinMsg) {
 							Client.this.name = ((JoinMsg) msg).getName();

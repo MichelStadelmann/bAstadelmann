@@ -4,9 +4,8 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.logging.Logger;
 
-import javafx.beans.property.SimpleIntegerProperty;
-import messages.ChangeMsg;
-import messages.GameMsg;
+import javafx.beans.property.SimpleStringProperty;
+import messages.BoardMsg;
 import messages.Message;
 
 public class Model {
@@ -28,7 +27,7 @@ public class Model {
 	private String name;
 	private Logger logger = Logger.getLogger("");
 
-	protected SimpleIntegerProperty newestMessage = new SimpleIntegerProperty();
+	protected SimpleStringProperty newestMessage = new SimpleStringProperty();
 
 	private View view;
 
@@ -158,21 +157,23 @@ public class Model {
 				@Override
 				public void run() {
 					while (true) {
-
+						BoardMsg bMsg;
 						try {
-							Message msg = Message.receive(socket);
-							if (msg instanceof ChangeMsg) {
-								System.out.println("Test");
-								newestMessage.set(((ChangeMsg) msg).getIndex());
-							} else if (msg instanceof GameMsg) {
-								// under Construction
-
-							}
-
+							bMsg = (BoardMsg) Message.receive(socket);
+							System.out.println("Client empfängt Nachricht von Server");
+							newestMessage.set(bMsg.getSign());
+							System.out.println(bMsg.getSign());
+							System.out.println("Update newest message");
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
+						// Message msg = Message.receive(socket);
+						// if (msg instanceof BoardMsg) {
+						// System.out.println("Client empfängt Nachricht von
+						// Server");
+						// newestMessage.set(((ChangeMsg) msg).getIndex());
+
 					}
 
 				}
@@ -196,62 +197,24 @@ public class Model {
 		if (socket != null)
 			try {
 				socket.close();
+				logger.info("Disconnected");
 			} catch (IOException e) {
 
 			}
-
 	}
 
-	// public void connect(String name, String ip, int port) {
-	// logger.info("Connect");
-	// this.name = name;
-	// try {
-	// socket = new Socket(ip, port);
-	//
-	// // Create thread to read incoming messages
-	// Runnable r = new Runnable() {
-	//
-	// @Override
-	// public void run() {
-	// while (true) {
-	//
-	// GameMsg gMsg = (GameMsg) Message.receive(socket);
-	// newestState.set(gMsg.getState());
-	// }
-	//
-	// }
-	//
-	// };
-	// Thread t = new Thread(r);
-	// t.start();
-	//
-	// // Send game state update message to the server
-	// Message msg = new GameMsg(controller.getIndex(),
-	// view.getBtn()[1].getText());
-	// msg.send(socket);
-	//
-	// } catch (Exception e) {
-	// logger.warning(e.toString());
-	// }
-	//
-	// }
-	//
-	// public void disconnect() {
-	// logger.info("Disconnect");
-	// if (socket != null)
-	// try {
-	// socket.close();
-	// } catch (IOException e) {
-	//
-	// }
-	//
+	// public void sendMessage(int index) throws IOException {
+	// serviceLocator = ServiceLocator.getServiceLocator();
+	// serviceLocator.getLogger().info("send Boardchange");
+	// Message change = new ChangeMsg(index);
+	// change.send(socket);
 	// }
 
-	public void sendMessage(int index) throws IOException {
+	public void sendMessage(String message) {
 		serviceLocator = ServiceLocator.getServiceLocator();
-		serviceLocator.getLogger().info("send Boardchange");
-		Message change = new ChangeMsg(index);
-		change.send(socket);
+		serviceLocator.getLogger().info("Client sends Board-Message");
+		serviceLocator.getLogger().info(name);
+		Message boardMsg = new BoardMsg(name, message);
+		boardMsg.send(socket);
 	}
-
 }
