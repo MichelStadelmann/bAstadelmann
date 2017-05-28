@@ -49,7 +49,7 @@ public class Controller {
 			public void handle(ActionEvent event) {
 				view.drawSymbol(index2);
 				model.update(index2, view.btn[1].getText());
-				// model.sendMessage(view.btn[1].getText());
+				model.sendMessage(index2, view.btn[1].getText());
 			}
 		});
 
@@ -123,7 +123,6 @@ public class Controller {
 		view.btn[8].setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				System.out.println("Hello World");
 				view.drawSymbol(index9);
 				model.update(index9, view.btn[8].getText());
 
@@ -135,14 +134,16 @@ public class Controller {
 		// Avoid throwing IllegalStateException by running from a non-JavaFX
 		// thread
 		// https://stackoverflow.com/questions/17850191/why-am-i-getting-java-lang-illegalstateexception-not-on-fx-application-thread
-		// model.actualIndex.addListener((o, oldValue, newValue) ->
-		// view.btn[(newValue)]);
+		model.actualIndex.addListener((o, oldValue, newValue) -> model.setButtonIndex((newValue)));
 		model.newestMessage.addListener((o, oldValue, newValue) -> Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				view.btn[0].setText(newValue);
+				view.btn[(int) model.getButtonIndex()].setText(newValue);
 			}
 		}));
+		// model.actualIndex.addListener((o, oldValue, newValue) ->
+		// view.btn[(newValue)]);
+
 		model.updateTurn.addListener((o, oldValue, newValue) -> model.setTurnX(newValue));
 		// model.updateButton.addListener((o, oldValue, newValue) ->
 		// view.btn[(newValue)]);

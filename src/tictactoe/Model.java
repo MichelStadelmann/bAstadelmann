@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.logging.Logger;
 
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -22,6 +21,7 @@ public class Model {
 	// Player X begins the game
 	private Boolean turnX = true;
 	private Boolean turnY = false;
+	private Number buttonIndex = 0;
 
 	private volatile boolean stop = false;
 
@@ -37,7 +37,7 @@ public class Model {
 	private Logger logger = Logger.getLogger("");
 
 	protected SimpleStringProperty newestMessage = new SimpleStringProperty();
-	protected IntegerProperty actualIndex = new SimpleIntegerProperty();
+	protected SimpleIntegerProperty actualIndex = new SimpleIntegerProperty();
 
 	protected SimpleBooleanProperty updateTurn = new SimpleBooleanProperty();
 
@@ -230,6 +230,14 @@ public class Model {
 	public void definePlayer() {
 		Client client;
 
+	}
+
+	public Number getButtonIndex() {
+		return buttonIndex;
+	}
+
+	public void setButtonIndex(Number newValue) {
+		this.buttonIndex = newValue;
 	}
 
 }
