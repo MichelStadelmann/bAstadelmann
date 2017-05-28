@@ -76,7 +76,6 @@ public class TicTacToe extends Application {
 		view.start();
 		view.getStage().setTitle("Spieler: " + name);
 		model.connect(iP, port, name);
-		model.definePlayer();
 
 	}
 

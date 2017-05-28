@@ -1,23 +1,19 @@
 package messages;
 
 public class GameMsg extends Message {
-	private Boolean turn;
-	
+	private String turn;
 
-	public GameMsg(Boolean turn) {
+	public GameMsg(String turn) {
 		super(MessageType.Game);
 		this.turn = turn;
 	}
-	
-	public Boolean getTurn() {
+
+	public String getTurn() {
 		return turn;
 	}
 
-
-	public void setTurn(Boolean turn) {
+	public void setTurn(String turn) {
 		this.turn = turn;
 	}
-
-
 
 }

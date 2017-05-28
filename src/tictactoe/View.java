@@ -116,7 +116,6 @@ public class View {
 		if (model.getTurnX() == true) {
 
 			btn[index].setText("X");
-			// btn[index].setDisable(true);
 			model.setTurnX(false);
 			model.setTurnY(true);
 

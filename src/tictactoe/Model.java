@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.logging.Logger;
 
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.Alert;
@@ -12,7 +11,6 @@ import javafx.scene.control.Alert.AlertType;
 import messages.BoardMsg;
 import messages.GameMsg;
 import messages.Message;
-import server.Client;
 
 public class Model {
 
@@ -38,34 +36,9 @@ public class Model {
 
 	protected SimpleStringProperty newestMessage = new SimpleStringProperty();
 	protected SimpleIntegerProperty actualIndex = new SimpleIntegerProperty();
-
-	protected SimpleBooleanProperty updateTurn = new SimpleBooleanProperty();
+	protected SimpleStringProperty updateTurn = new SimpleStringProperty();
 
 	private View view;
-
-	public GameStat getGamy() {
-		return gamy;
-	}
-
-	public void setGamy(GameStat gamy) {
-		this.gamy = gamy;
-	}
-
-	public Boolean getTurnY() {
-		return turnY;
-	}
-
-	public void setTurnY(Boolean turnY) {
-		this.turnY = turnY;
-	}
-
-	public Boolean getTurnX() {
-		return turnX;
-	}
-
-	public void setTurnX(Boolean turnX) {
-		this.turnX = turnX;
-	}
 
 	/**
 	 * The method update does two things: First it actualizes the state of
@@ -141,6 +114,10 @@ public class Model {
 
 			alert.showAndWait();
 		}
+
+		else {
+		}
+		;
 
 	}
 
@@ -227,8 +204,24 @@ public class Model {
 		boardMsg.send(socket);
 	}
 
-	public void definePlayer() {
-		Client client;
+	public void sendMessage(String turn) {
+		Message gameMsg = new GameMsg(turn);
+		gameMsg.send(socket);
+		System.out.println("Hello");
+	}
+
+	public void changeTurn(String turn) {
+		String x = new String();
+		String y = new String();
+		if (turn == x) {
+			turnX = true;
+			turnY = false;
+			System.out.println("Hello");
+		}
+		if (turn == y) {
+			turnY = true;
+			turnX = false;
+		}
 
 	}
 
@@ -238,6 +231,38 @@ public class Model {
 
 	public void setButtonIndex(Number newValue) {
 		this.buttonIndex = newValue;
+	}
+
+	public GameStat getGamy() {
+		return gamy;
+	}
+
+	public void setGamy(GameStat gamy) {
+		this.gamy = gamy;
+	}
+
+	public Boolean getTurnY() {
+		return turnY;
+	}
+
+	public void setTurnY(Boolean turnY) {
+		this.turnY = turnY;
+	}
+
+	public Boolean getTurnX() {
+		return turnX;
+	}
+
+	public void setTurnX(Boolean turnX) {
+		this.turnX = turnX;
+	}
+
+	public int getCounter() {
+		return counter;
+	}
+
+	public void setCounter(int counter) {
+		this.counter = counter;
 	}
 
 }

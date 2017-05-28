@@ -6,7 +6,6 @@ import java.net.Socket;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import messages.GameMsg;
 import messages.Message;
 import tictactoe.ServiceLocator;
 
@@ -46,7 +45,7 @@ public class ServerModel {
 							clients.add(client);
 							userCounter++;
 							if (userCounter == 1) {
-								startGame();
+								// startGame();
 							}
 
 							for (Client i : clients) {
@@ -119,12 +118,12 @@ public class ServerModel {
 		return clients;
 	}
 
-	public void startGame() {
-		serviceLocator = ServiceLocator.getServiceLocator();
-		serviceLocator.getLogger().info("2 player connected - game may start");
-		Message msg = new GameMsg(true);
-		clients.get(0).send(msg);
-
-	}
+	// public void startGame() {
+	// serviceLocator = ServiceLocator.getServiceLocator();
+	// serviceLocator.getLogger().info("2 player connected - game may start");
+	// Message msg = new GameMsg(true);
+	// clients.get(0).send(msg);
+	//
+	// }
 
 }

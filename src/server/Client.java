@@ -32,8 +32,8 @@ public class Client {
 							System.out.println("broadcast to all clients");
 
 							if (msg instanceof GameMsg) {
-								serverModel.startGame();
-								System.out.println("Message for Client 1");
+								serverModel.broadcast((BoardMsg) msg);
+
 							}
 
 						} else if (msg instanceof JoinMsg) {
