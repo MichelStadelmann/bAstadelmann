@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.Socket;
 
 import messages.BoardMsg;
+import messages.GameMsg;
 import messages.JoinMsg;
 import messages.Message;
 
@@ -29,6 +30,12 @@ public class Client {
 						if (msg instanceof BoardMsg) {
 							serverModel.broadcast((BoardMsg) msg);
 							System.out.println("broadcast to all clients");
+
+							if (msg instanceof GameMsg) {
+								serverModel.startGame();
+								System.out.println("Message for Client 1");
+							}
+
 						} else if (msg instanceof JoinMsg) {
 							Client.this.name = ((JoinMsg) msg).getName();
 

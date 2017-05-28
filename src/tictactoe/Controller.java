@@ -23,17 +23,6 @@ public class Controller {
 		 */
 
 		// register ourselves to listen for button clicks
-		// for (int i = 0; i < 9; i++) {
-		// view.btn[i].setOnAction(new EventHandler<ActionEvent>() {
-		// @Override
-		// public void handle(ActionEvent event) {
-		// System.out.println("Hello World");
-		//
-		// }
-		// });
-		// }
-
-		// register ourselves to listen for button clicks
 
 		index = 0;
 		view.btn[0].setOnAction(new EventHandler<ActionEvent>() {
@@ -42,11 +31,13 @@ public class Controller {
 
 			@Override
 			public void handle(ActionEvent event) {
-				System.out.println("Hello World");
 				view.drawSymbol(index);
 				model.update(index, view.btn[0].getText());
-				model.sendMessage(view.btn[0].getText());
-				
+				model.sendMessage(index, view.btn[0].getText());
+
+				// for (int i = 0; i < 9; i++) {
+				// view.btn[i].setDisable(true);
+				// }
 
 			}
 		});
@@ -56,10 +47,9 @@ public class Controller {
 		view.btn[1].setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				System.out.println("Hello World");
-				// model.update();
 				view.drawSymbol(index2);
 				model.update(index2, view.btn[1].getText());
+				// model.sendMessage(view.btn[1].getText());
 			}
 		});
 
@@ -67,10 +57,9 @@ public class Controller {
 		view.btn[2].setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				System.out.println("Hello World");
-				// model.update();
 				view.drawSymbol(index3);
 				model.update(index3, view.btn[2].getText());
+				// model.sendMessage(view.btn[2].getText());
 
 			}
 		});
@@ -79,10 +68,9 @@ public class Controller {
 		view.btn[3].setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				System.out.println("Hello World");
-				// model.update();
 				view.drawSymbol(index4);
 				model.update(index4, view.btn[3].getText());
+				// model.sendMessage(view.btn[3].getText());
 
 			}
 		});
@@ -91,10 +79,9 @@ public class Controller {
 		view.btn[4].setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				System.out.println("Hello World");
-				// model.update();
 				view.drawSymbol(index5);
 				model.update(index5, view.btn[4].getText());
+				// model.sendMessage(view.btn[4].getText());
 
 			}
 		});
@@ -103,10 +90,9 @@ public class Controller {
 		view.btn[5].setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				System.out.println("Hello World");
-				// model.update();
 				view.drawSymbol(index6);
 				model.update(index6, view.btn[5].getText());
+				// model.sendMessage(view.btn[5].getText());
 
 			}
 		});
@@ -115,10 +101,9 @@ public class Controller {
 		view.btn[6].setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				System.out.println("Hello World");
-				// model.update();
 				view.drawSymbol(index7);
 				model.update(index7, view.btn[6].getText());
+				// model.sendMessage(view.btn[6].getText());
 
 			}
 		});
@@ -127,10 +112,9 @@ public class Controller {
 		view.btn[7].setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				System.out.println("Hello World");
-				// model.update();
 				view.drawSymbol(index8);
 				model.update(index8, view.btn[7].getText());
+				// model.sendMessage(view.btn[7].getText());
 
 			}
 		});
@@ -140,9 +124,9 @@ public class Controller {
 			@Override
 			public void handle(ActionEvent event) {
 				System.out.println("Hello World");
-				// model.update();
 				view.drawSymbol(index9);
 				model.update(index9, view.btn[8].getText());
+
 			}
 		});
 
@@ -151,12 +135,18 @@ public class Controller {
 		// Avoid throwing IllegalStateException by running from a non-JavaFX
 		// thread
 		// https://stackoverflow.com/questions/17850191/why-am-i-getting-java-lang-illegalstateexception-not-on-fx-application-thread
+		// model.actualIndex.addListener((o, oldValue, newValue) ->
+		// view.btn[(newValue)]);
 		model.newestMessage.addListener((o, oldValue, newValue) -> Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
 				view.btn[0].setText(newValue);
 			}
 		}));
+		model.updateTurn.addListener((o, oldValue, newValue) -> model.setTurnX(newValue));
+		// model.updateButton.addListener((o, oldValue, newValue) ->
+		// view.btn[(newValue)]);
+		System.out.println(model.getTurnX());
 
 	}
 

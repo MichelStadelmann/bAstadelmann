@@ -4,8 +4,14 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.logging.Logger;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import messages.BoardMsg;
+import messages.GameMsg;
 import messages.Message;
 import server.Client;
 
@@ -16,7 +22,7 @@ public class Model {
 	// Player X begins the game
 	private Boolean turnX = true;
 	private Boolean turnY = false;
-	
+
 	private volatile boolean stop = false;
 
 	private int counter = 0;
@@ -31,6 +37,9 @@ public class Model {
 	private Logger logger = Logger.getLogger("");
 
 	protected SimpleStringProperty newestMessage = new SimpleStringProperty();
+	protected IntegerProperty actualIndex = new SimpleIntegerProperty();
+
+	protected SimpleBooleanProperty updateTurn = new SimpleBooleanProperty();
 
 	private View view;
 
@@ -77,64 +86,60 @@ public class Model {
 			System.out.println(s);
 		counter++;
 
-		// toDo: examine switch statement for less code
+		if (counter == 9) {
 
-		// vertical win condition
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Unentschieden!");
+			alert.setHeaderText("Spiel zu Ende");
+			alert.setContentText("Kein Spieler konnte sich durchsetzen!");
 
-		checkVictory(state);
+			alert.showAndWait();
 
-		// if (board[0] == "X" && board[1] == "X" && board[2] == "X") {
-		// System.out.println("Player 1 has won");
-		// }
-		//
-		// if (board[4] == "X" && board[5] == "X" && board[6] == "X") {
-		// System.out.println("Player 1 has won");
-		// }
-		//
-		// if (board[7] == "X" && board[8] == "X" && board[9] == "X") {
-		// System.out.println("Player 1 has won");
-		// }
-		//
-		// // horizontal win condition
-		//
-		// if (board[0] == "X" && board[4] == "X" && board[7] == "X") {
-		// System.out.println("Player 1 has won");
-		// }
-		//
-		// if (board[1] == "X" && board[5] == "X" && board[8] == "X") {
-		// System.out.println("Player 1 has won");
-		// }
-		//
-		// if (board[2] == "X" && board[6] == "X" && board[9] == "X") {
-		// System.out.println("Player 1 has won");
-		// }
-		//
-		// // diagonal win condition
-		//
-		// if (board[0] == "X" && board[5] == "X" && board[9] == "X") {
-		// System.out.println("Player 1 has won");
-		// }
-		//
-		// if (board[2] == "X" && board[5] == "X" && board[7] == "X") {
-		// System.out.println("Player 1 has won");
-		// }
-		//
-		// //
-		//
-		// if (board[0] == "Y" && board[1] == "Y" && board[2] == "Y") {
-		// System.out.println("Player 2 has won");
-		// }
+		}
 
-		// else if (counter == 9) {
-		// System.out.println("Tie Game!");
-		// }
+		checkVictory();
 
 	}
 
-	private void checkVictory(String state) {
+	/**
+	 * This method checks all horizontal, vertical and diagonal win conditions
+	 * and gives out an alert message to end the game
+	 */
 
-		if (board[0] == "X" && board[1] == "X" && board[2] == "X") {
-			System.out.println("Player 1 has won");
+	private void checkVictory() {
+
+		if (board[0] == "X" && board[1] == "X" && board[2] == "X"
+				|| (board[3] == "X" && board[4] == "X" && board[5] == "X")
+				|| (board[6] == "X" && board[7] == "X" && board[8] == "X")
+				|| (board[0] == "X" && board[3] == "X" && board[6] == "X")
+				|| (board[1] == "X" && board[4] == "X" && board[7] == "X")
+				|| (board[2] == "X" && board[5] == "X" && board[8] == "X")
+				|| (board[0] == "X" && board[4] == "X" && board[8] == "X")
+				|| (board[2] == "X" && board[6] == "X" && board[6] == "X")) {
+
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Spieler X hat gewonnen!");
+			alert.setHeaderText("Spiel zu Ende");
+			alert.setContentText("Spieler X hat gewonnen!");
+
+			alert.showAndWait();
+		}
+
+		if (board[0] == "O" && board[1] == "O" && board[2] == "O"
+				|| (board[3] == "O" && board[4] == "O" && board[5] == "O")
+				|| (board[6] == "O" && board[7] == "O" && board[8] == "O")
+				|| (board[0] == "O" && board[3] == "O" && board[6] == "O")
+				|| (board[1] == "O" && board[4] == "O" && board[7] == "O")
+				|| (board[2] == "O" && board[5] == "O" && board[8] == "O")
+				|| (board[0] == "O" && board[4] == "O" && board[8] == "O")
+				|| (board[2] == "O" && board[6] == "O" && board[6] == "O")) {
+
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Spieler O hat gewonnen!");
+			alert.setHeaderText("Spiel zu Ende");
+			alert.setContentText("Spieler O hat gewonnen!");
+
+			alert.showAndWait();
 		}
 
 	}
@@ -158,27 +163,24 @@ public class Model {
 			// Runnable r = new Runnable as an inner class
 			Runnable r = new Runnable() {
 
-				
-
 				@Override
 				public void run() {
 					while (!stop) {
-						BoardMsg bMsg;
 						try {
-							bMsg = (BoardMsg) Message.receive(socket);
-							System.out.println("Client empfängt Nachricht von Server");
-							newestMessage.set(bMsg.getSign());
-							System.out.println(bMsg.getSign());
-							System.out.println("Update newest message");
+							Message msg = Message.receive(socket);
+							if (msg instanceof BoardMsg) {
+								newestMessage.set(((BoardMsg) msg).getSign());
+								actualIndex.set(((BoardMsg) msg).getIndex());
+
+							}
+							if (msg instanceof GameMsg) {
+								System.out.println("Client erhält Zug");
+								updateTurn.set(((GameMsg) msg).getTurn());
+							}
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						// Message msg = Message.receive(socket);
-						// if (msg instanceof BoardMsg) {
-						// System.out.println("Client empfängt Nachricht von
-						// Server");
-						// newestMessage.set(((ChangeMsg) msg).getIndex());
 
 					}
 
@@ -217,17 +219,17 @@ public class Model {
 	// change.send(socket);
 	// }
 
-	public void sendMessage(String message) {
+	public void sendMessage(int index, String message) {
 		serviceLocator = ServiceLocator.getServiceLocator();
 		serviceLocator.getLogger().info("Client sends Board-Message");
 		serviceLocator.getLogger().info(name);
-		Message boardMsg = new BoardMsg(name, message);
+		Message boardMsg = new BoardMsg(name, index, message);
 		boardMsg.send(socket);
 	}
 
 	public void definePlayer() {
 		Client client;
-		
-		
+
 	}
+
 }

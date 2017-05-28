@@ -1,34 +1,23 @@
 package messages;
 
 public class GameMsg extends Message {
-	private int field;
-	private String content;
+	private Boolean turn;
+	
 
-	public GameMsg(int field, String content) {
+	public GameMsg(Boolean turn) {
 		super(MessageType.Game);
-		this.field = field;
-		this.content = content;
+		this.turn = turn;
+	}
+	
+	public Boolean getTurn() {
+		return turn;
 	}
 
-	public int getField() {
-		return field;
+
+	public void setTurn(Boolean turn) {
+		this.turn = turn;
 	}
 
-	public void setField(int field) {
-		this.field = field;
-	}
 
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
-	public String getState() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

@@ -43,10 +43,12 @@ public class View {
 			for (int j = 0; j < 3; j++) {
 
 				// create buttons and add them to layout
+				// in Beginning of the game they shall be disabled
 				if (i == 0) {
 					btn[j] = new Button();
 					btn[j].setMaxWidth(Double.MAX_VALUE);
 					btn[j].setMaxHeight(Double.MAX_VALUE);
+					// btn[j].setDisable(true);
 					root.add(btn[j], i, j);
 					// buttons fill max width of GridPane
 					ColumnConstraints column = new ColumnConstraints();
@@ -59,6 +61,7 @@ public class View {
 					btn[j + 3] = new Button();
 					btn[j + 3].setMaxWidth(Double.MAX_VALUE);
 					btn[j + 3].setMaxHeight(Double.MAX_VALUE);
+					// btn[j + 3].setDisable(true);
 					root.add(btn[j + 3], i, j);
 
 				}
@@ -67,6 +70,7 @@ public class View {
 					btn[j + 6] = new Button();
 					btn[j + 6].setMaxWidth(Double.MAX_VALUE);
 					btn[j + 6].setMaxHeight(Double.MAX_VALUE);
+					// btn[j + 6].setDisable(true);
 					root.add(btn[j + 6], i, j);
 
 				}
@@ -81,6 +85,7 @@ public class View {
 		}
 
 		Scene scene = new Scene(root);
+		scene.getStylesheets().add(getClass().getResource("TicTacToe.css").toExternalForm());
 		stage.setScene(scene);
 
 		serviceLocator = ServiceLocator.getServiceLocator();
@@ -141,6 +146,14 @@ public class View {
 
 	public void setStage(Stage stage) {
 		this.stage = stage;
+	}
+
+	public void disableButtons(Button[] Btn) {
+		this.btn = btn;
+		for (int i = 0; i > 9; i++) {
+			btn[i].setDisable(true);
+		}
+
 	}
 
 }

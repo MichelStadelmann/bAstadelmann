@@ -6,6 +6,7 @@ import java.net.Socket;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import messages.GameMsg;
 import messages.Message;
 import tictactoe.ServiceLocator;
 
@@ -22,11 +23,10 @@ public class ServerModel {
 	private ServerSocket listener;
 	ServiceLocator serviceLocator;
 	public volatile boolean stop = false;
+	private int userCounter = 0;
 
 	// List for the current clients
 	protected final ObservableList<Client> clients = FXCollections.observableArrayList();
-
-	
 
 	public void startServer(int port) throws IOException {
 		try {
@@ -42,12 +42,19 @@ public class ServerModel {
 							Socket socket = listener.accept();
 							// Client vs Clientcommunication
 							Client client = new Client(ServerModel.this, socket);
+
 							clients.add(client);
+							userCounter++;
+							if (userCounter == 1) {
+								startGame();
+							}
+
 							for (Client i : clients) {
 								System.out.println((i));
+								serviceLocator = ServiceLocator.getServiceLocator();
+								serviceLocator.getLogger().info(clients.toString());
+
 							}
-							serviceLocator = ServiceLocator.getServiceLocator();
-							serviceLocator.getLogger().info(clients.toString());
 
 						} catch (Exception e) {
 							serviceLocator = ServiceLocator.getServiceLocator();
@@ -107,9 +114,17 @@ public class ServerModel {
 		}
 
 	}
-	
+
 	public ObservableList<Client> getClients() {
 		return clients;
+	}
+
+	public void startGame() {
+		serviceLocator = ServiceLocator.getServiceLocator();
+		serviceLocator.getLogger().info("2 player connected - game may start");
+		Message msg = new GameMsg(true);
+		clients.get(0).send(msg);
+
 	}
 
 }
